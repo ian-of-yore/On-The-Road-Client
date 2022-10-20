@@ -21,7 +21,7 @@ const RightSideNav = () => {
     }
 
     return (
-        <div>
+        <div className='shadow p-3'>
             <ButtonGroup vertical>
                 <Button onClick={handleGoogleSignIn} className='mb-2' variant="outline-primary"><FaGoogle></FaGoogle> Continue With Google</Button>
                 <Button variant="outline-dark"><FaGithub></FaGithub> Continue With GitHub</Button>

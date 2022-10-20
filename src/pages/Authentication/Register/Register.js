@@ -25,14 +25,19 @@ const Register = () => {
                 })
         }
         else {
-            setPasswordError("kire bhai bhul password disen ka? Aban try koren")
+            setPasswordError("Password didn't match!! Try Again")
         }
     }
 
 
     return (
-        <div>
+        <div className='w-75 mx-auto mt-5 shadow-lg p-5'>
             <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3" controlId="displayName">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control type="text" name='name' placeholder="Your Username" required />
+                </Form.Group>
+
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" name='email' placeholder="Enter email" required />

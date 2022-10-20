@@ -11,9 +11,9 @@ const LeftSideNav = () => {
     }, [])
 
     return (
-        <div className='shadow'>
-            <h2 className='p-2'>Categories</h2>
-            <div className='p-3'>
+        <div className='shadow p-3'>
+            <h2>Categories</h2>
+            <div className='p-2'>
                 {
                     categories.map(category => <p key={category.id}>
                         <Link to={`/category/${category.id}`}>{category.name}</Link>

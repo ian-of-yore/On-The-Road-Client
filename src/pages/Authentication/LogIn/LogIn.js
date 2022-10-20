@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
@@ -6,6 +6,7 @@ import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 const LogIn = () => {
 
     const { logInEmaiPassword } = useContext(AuthContext);
+    const [successMessage, setSuccessMessage] = useState('')
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -16,6 +17,7 @@ const LogIn = () => {
             .then((result) => {
                 console.log(result.user)
                 form.reset()
+                setSuccessMessage("Successfully Logged In")
             })
             .catch((error) => {
                 console.error(error)
@@ -23,7 +25,7 @@ const LogIn = () => {
     }
 
     return (
-        <div>
+        <div className='w-75 mx-auto mt-5 shadow-lg p-5'>
             <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
@@ -37,7 +39,7 @@ const LogIn = () => {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" name='password' placeholder="Password" required />
                 </Form.Group>
-
+                <p className='text-success'><small>{successMessage}</small></p>
                 <Button variant="outline-dark" type="submit">
                     Submit
                 </Button>
