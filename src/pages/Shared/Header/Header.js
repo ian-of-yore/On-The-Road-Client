@@ -14,7 +14,14 @@ import { Image } from 'react-bootstrap';
 
 const Header = () => {
 
-    const { user } = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
+    const handleLogOut = () => {
+        logOut()
+            .then()
+            .catch((error) => {
+                console.error(error)
+            })
+    }
 
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light" className='mb-3'>
@@ -38,14 +45,29 @@ const Header = () => {
                         </NavDropdown>
                     </Nav>
                     <Nav>
-                        {/* <Nav.Link className='p-0 me-1'>
+                        <Nav.Link >
                             {
-                                user.photoURL ? <Image roundedCircle src={user.photoURL} style={{ height: '30px' }}></Image> : <FaUserNinja></FaUserNinja>
+                                user?.uid ?
+                                    <div className='d-flex align-items-center'>
+                                        <div>
+                                            {user.displayName ? user.displayName : user.email}
+                                        </div>
+                                        <div className='mx-3'>
+                                            {
+                                                user.photoURL4 ? <Image roundedCircle src={user.photoURL} style={{ height: '30px' }}></Image> : <FaUserNinja></FaUserNinja>
+                                            }
+                                        </div>
+                                        <div>
+                                            <Link onClick={handleLogOut}><Button variant='dark'>Log Out</Button></Link>
+                                        </div>
+                                    </div>
+                                    :
+                                    <>
+                                        <Link className='me-3' to='/login'><Button variant='dark'>Log In</Button></Link>
+                                        <Link to='/register'><Button variant='dark'>Register</Button></Link>
+                                    </>
                             }
                         </Nav.Link>
-                        <Nav.Link className='p-0 fs-5 fw-semibold' eventKey={2}>
-                            {user.displayName}
-                        </Nav.Link> */}
                     </Nav>
                     <div className='d-lg-none'>
                         <LeftSideNav></LeftSideNav>

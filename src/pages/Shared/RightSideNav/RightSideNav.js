@@ -1,3 +1,4 @@
+import { GoogleAuthProvider } from 'firebase/auth';
 import React, { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -8,13 +9,12 @@ import BrandCarousel from '../BrandCarousel/BrandCarousel';
 
 
 const RightSideNav = () => {
-    const { signInGoogle } = useContext(AuthContext);
+    const { signInProvider } = useContext(AuthContext);
+    const providerGoogle = new GoogleAuthProvider();
 
     const handleGoogleSignIn = () => {
-        signInGoogle()
-            .then((result) => {
-                // console.log(result.user)
-            })
+        signInProvider(providerGoogle)
+            .then(() => { })
             .catch((error) => {
                 console.error(error)
             })
