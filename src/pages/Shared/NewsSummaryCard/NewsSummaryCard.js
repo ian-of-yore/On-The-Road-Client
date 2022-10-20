@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { FaRegBookmark, FaShareAlt, FaStar, FaEye } from 'react-icons/fa';
 
 const NewsSummaryCard = ({ singleNews }) => {
-    console.log(singleNews)
     const { _id, author, rating, details, image_url, title, total_view } = singleNews;
     const { name, img, published_date } = author;
     return (
@@ -34,9 +33,9 @@ const NewsSummaryCard = ({ singleNews }) => {
                             <p>{details}</p>}
                     </Card.Text>
                 </Card.Body>
-                <Card.Footer className="text-muted d-flex justify-content-between">
+                <Card.Footer className="d-flex justify-content-between">
                     <div className='d-flex align-items-center'>
-                        <FaStar className='me-2'></FaStar>
+                        <FaStar className='me-2 text-warning'></FaStar>
                         {rating.number}
                     </div>
                     <div className='d-flex align-items-center'>
