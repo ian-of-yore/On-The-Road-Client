@@ -1,14 +1,14 @@
 import React from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 import { FaStar } from 'react-icons/fa';
 
 
 const News = () => {
     const newsDetails = useLoaderData();
-    const { author, details, image_url, title, rating } = newsDetails;
+    const { author, details, image_url, title, rating, category_id } = newsDetails;
 
-    console.log(newsDetails);
     return (
         <Card>
             <Card.Img variant="top" src={image_url} />
@@ -29,7 +29,11 @@ const News = () => {
                 <Card.Text>
                     {details}
                 </Card.Text>
-
+                <Card.Footer className='d-flex justify-content-center align-items-center'>
+                    <Link className='text-decoration-none text-dark' to={`/category/${category_id}`}>
+                        <Button variant='outline-dark'>All news in this Category</Button>
+                    </Link>
+                </Card.Footer>
             </Card.Body>
         </Card>
     );
