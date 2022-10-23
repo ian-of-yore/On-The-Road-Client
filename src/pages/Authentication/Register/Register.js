@@ -7,10 +7,15 @@ import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 const Register = () => {
 
     const { createUser } = useContext(AuthContext);
+    const [successMessage, setSuccessMessage] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        setSuccessMessage('');
+        setPasswordError('');
+
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
@@ -19,9 +24,12 @@ const Register = () => {
             createUser(email, password)
                 .then((result) => {
                     form.reset();
+                    setSuccessMessage("Registration Complete!");
+                    setPasswordError('');
                 })
                 .catch((error) => {
-                    console.error(error)
+                    const errorMessage = (error.message).split(':')[1];
+                    setPasswordError(errorMessage);
                 })
         }
         else {
@@ -56,7 +64,9 @@ const Register = () => {
                     <Form.Control type="password" name='confirmPassword' placeholder="Enter your password again" required />
                 </Form.Group>
 
+                <p className='text-success'><small>{successMessage}</small></p>
                 <p className='text-danger'><small>{passwordError}</small></p>
+
                 <Button variant="outline-dark" type="submit">
                     Submit
                 </Button>
