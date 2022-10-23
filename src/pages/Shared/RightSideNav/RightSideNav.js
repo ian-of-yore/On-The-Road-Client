@@ -4,17 +4,25 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { FaFacebook, FaTwitter, FaInstagram, FaTwitch, FaGoogle, FaGithub, FaDiscord } from 'react-icons/fa';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import BrandCarousel from '../BrandCarousel/BrandCarousel';
 
 
 const RightSideNav = () => {
+
+    let navigate = useNavigate();
+    let location = useLocation();
+    let from = location.state?.from?.pathname || "/";
+
     const { signInProvider } = useContext(AuthContext);
     const providerGoogle = new GoogleAuthProvider();
 
     const handleGoogleSignIn = () => {
         signInProvider(providerGoogle)
-            .then(() => { })
+            .then(() => {
+                navigate(from, { replace: true });
+            })
             .catch((error) => {
                 console.error(error)
             })
