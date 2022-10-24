@@ -1,14 +1,16 @@
 import React, { useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 
 
 const Register = () => {
 
-    const { createUser } = useContext(AuthContext);
+    const { createUser, updateUserProfile } = useContext(AuthContext);
     const [successMessage, setSuccessMessage] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [checkBoxState, setCheckBoxState] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -17,6 +19,8 @@ const Register = () => {
         setPasswordError('');
 
         const form = event.target;
+        const userName = form.userName.value;
+        const photo = form.photo.value;
         const email = form.email.value;
         const password = form.password.value;
         const confirmPassword = form.confirmPassword.value;
@@ -26,6 +30,10 @@ const Register = () => {
                     form.reset();
                     setSuccessMessage("Registration Complete!");
                     setPasswordError('');
+                    updateUserProfile({
+                        displayName: userName,
+                        photoURL: photo
+                    })
                 })
                 .catch((error) => {
                     const errorMessage = (error.message).split(':')[1];
@@ -38,12 +46,22 @@ const Register = () => {
     }
 
 
+    const handleCheckBox = (event) => {
+        setCheckBoxState(event.target.checked);
+    }
+
+
     return (
         <div className='w-75 mx-auto mt-5 shadow-lg p-5'>
             <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="displayName">
                     <Form.Label>Username</Form.Label>
-                    <Form.Control type="text" name='name' placeholder="Your Username" required />
+                    <Form.Control type="text" name='userName' placeholder="Your Username" required />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="photo">
+                    <Form.Label>Photo URL</Form.Label>
+                    <Form.Control type="text" name='photo' placeholder="Your Photo URL" required />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -67,7 +85,14 @@ const Register = () => {
                 <p className='text-success'><small>{successMessage}</small></p>
                 <p className='text-danger'><small>{passwordError}</small></p>
 
-                <Button variant="outline-dark" type="submit">
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                    <Form.Check
+                        onClick={handleCheckBox}
+                        type="checkbox"
+                        label={<>Accept <Link className='text-decoration-none' to='/terms'>Terms & Conditions</Link> </>} />
+                </Form.Group>
+
+                <Button variant="outline-dark" type="submit" disabled={!checkBoxState}>
                     Submit
                 </Button>
             </Form>
